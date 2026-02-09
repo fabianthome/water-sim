@@ -1,0 +1,226 @@
+[gd_scene format=3 uid="uid://d37u0ruh244du"]
+
+[ext_resource type="Shader" uid="uid://cbe4ek5s5f3k0" path="res://shaders/gerstner-sum.gdshader" id="1_e66cg"]
+[ext_resource type="Material" uid="uid://nfdbakj2iqyk" path="res://shaders/ocean.tres" id="2_e66cg"]
+[ext_resource type="Shader" uid="uid://d3gmfbul25eqt" path="res://shaders/gerstner.gdshader" id="2_l20p6"]
+[ext_resource type="Shader" uid="uid://dxxono7dq6hyf" path="res://shaders/directional.gdshader" id="3_vephn"]
+[ext_resource type="Shader" uid="uid://c2s3y6w2e6p75" path="res://shaders/radial.gdshader" id="4_b0nem"]
+[ext_resource type="Shader" uid="uid://cxv23bf34fxro" path="res://shaders/sum-gerstner.gdshader" id="4_x0xbu"]
+[ext_resource type="Shader" uid="uid://qqnr4jubamy4" path="res://shaders/sum-sine.gdshader" id="5_b0nem"]
+[ext_resource type="Shader" uid="uid://sn20lej4lcn5" path="res://shaders/acerola-sum-sine.gdshader" id="7_7qr1p"]
+[ext_resource type="Texture2D" uid="uid://cl7f5wiov2er6" path="res://assets/skybox-sunset.png" id="9_5fme1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6gsge"]
+render_priority = 0
+shader = ExtResource("1_e66cg")
+shader_parameter/water_color = Color(0.01, 0.05, 0.1, 1)
+shader_parameter/bubble_color = Color(0.5, 0.7, 1, 1)
+shader_parameter/wave_count = 3
+shader_parameter/wave_1 = Vector4(1, 0, 0.5, 0.2)
+shader_parameter/wave_2 = Vector4(0.7, 0.7, 0.3, 0.1)
+shader_parameter/wave_3 = Vector4(-0.2, 0.8, 0.2, 0.05)
+shader_parameter/params_1 = Vector2(4, 0.5)
+shader_parameter/params_2 = Vector2(2.5, 1)
+shader_parameter/params_3 = Vector2(1.2, 0.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s3vvr"]
+material = SubResource("ShaderMaterial_6gsge")
+size = Vector2(4, 2)
+subdivide_width = 200
+subdivide_depth = 200
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_b0nem"]
+material = ExtResource("2_e66cg")
+size = Vector2(400, 400)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s3vvr"]
+render_priority = 0
+shader = ExtResource("5_b0nem")
+shader_parameter/wave_a = Vector4(1, 1, 0.2, 2)
+shader_parameter/wave_b = Vector4(1, 0.6, 0.1, 3)
+shader_parameter/wave_c = Vector4(-0.5, 1, 0.04, 5)
+shader_parameter/wave_d = Vector4(0.2, -1, 0.06, 1.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5fme1"]
+material = SubResource("ShaderMaterial_s3vvr")
+size = Vector2(4, 2)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x0xbu"]
+render_priority = 0
+shader = ExtResource("2_l20p6")
+shader_parameter/steepness = 0.5
+shader_parameter/amplitude = 0.3
+shader_parameter/wavelength = 2.0
+shader_parameter/direction = Vector2(1, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7qr1p"]
+material = SubResource("ShaderMaterial_x0xbu")
+size = Vector2(4, 2)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h5dly"]
+render_priority = 0
+shader = ExtResource("4_x0xbu")
+shader_parameter/wave1 = Vector4(1, 0, 0.4, 0.2)
+shader_parameter/wave2 = Vector4(0.7, 0.7, 0.3, 0.1)
+shader_parameter/wave3 = Vector4(0, 1, 0.2, 0.05)
+shader_parameter/wavelength1 = 4.0
+shader_parameter/wavelength2 = 2.5
+shader_parameter/wavelength3 = 1.2
+shader_parameter/speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nwon6"]
+material = SubResource("ShaderMaterial_h5dly")
+size = Vector2(4, 2)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7qr1p"]
+render_priority = 0
+shader = ExtResource("3_vephn")
+shader_parameter/amplitude = 0.5
+shader_parameter/wavelength = 10.0
+shader_parameter/steepness = 0.5
+shader_parameter/direction = Vector2(1, 0)
+shader_parameter/speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e66cg"]
+material = SubResource("ShaderMaterial_7qr1p")
+size = Vector2(4, 2)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5fme1"]
+render_priority = 0
+shader = ExtResource("4_b0nem")
+shader_parameter/center = Vector3(0, 0, 0)
+shader_parameter/amplitude = 0.3
+shader_parameter/wavelength = 2.0
+shader_parameter/speed = 2.0
+shader_parameter/decay = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h5dly"]
+material = SubResource("ShaderMaterial_5fme1")
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nwon6"]
+render_priority = 0
+shader = ExtResource("7_7qr1p")
+shader_parameter/use_vertex_displacement = true
+shader_parameter/use_fbm = false
+shader_parameter/wave_type = 0
+shader_parameter/circular_waves = false
+shader_parameter/normals_in_pixel_shader = false
+shader_parameter/wave_count = 2
+shader_parameter/wave_0_direction = Vector2(1, 0)
+shader_parameter/wave_0_amplitude = 0.5
+shader_parameter/wave_0_frequency = 1.0
+shader_parameter/wave_0_speed = 1.0
+shader_parameter/wave_0_steepness = 1.0
+shader_parameter/v_fbm_seed = 0.0
+shader_parameter/v_fbm_wave_count = 4
+shader_parameter/v_fbm_frequency = 1.0
+shader_parameter/v_fbm_frequency_mult = 2.0
+shader_parameter/v_fbm_amplitude = 0.5
+shader_parameter/v_fbm_amplitude_mult = 0.5
+shader_parameter/v_fbm_initial_speed = 1.0
+shader_parameter/v_fbm_speed_ramp = 1.0
+shader_parameter/v_fbm_drag = 0.0
+shader_parameter/v_fbm_height = 1.0
+shader_parameter/v_fbm_max_peak = 1.0
+shader_parameter/v_fbm_peak_offset = 0.0
+shader_parameter/f_fbm_seed = 0.0
+shader_parameter/f_fbm_wave_count = 4
+shader_parameter/f_fbm_frequency = 1.0
+shader_parameter/f_fbm_frequency_mult = 2.0
+shader_parameter/f_fbm_amplitude = 0.5
+shader_parameter/f_fbm_amplitude_mult = 0.5
+shader_parameter/f_fbm_initial_speed = 1.0
+shader_parameter/f_fbm_speed_ramp = 1.0
+shader_parameter/f_fbm_drag = 0.0
+shader_parameter/f_fbm_height = 1.0
+shader_parameter/f_fbm_max_peak = 1.0
+shader_parameter/f_fbm_peak_offset = 0.0
+shader_parameter/albedo_color = Color(0, 0.2, 0.8, 1)
+shader_parameter/tip_color = Color(1, 1, 1, 1)
+shader_parameter/tip_attenuation = 1.0
+shader_parameter/fresnel_color = Color(1, 1, 1, 1)
+shader_parameter/fresnel_strength = 1.0
+shader_parameter/fresnel_bias = 0.0
+shader_parameter/fresnel_shininess = 5.0
+shader_parameter/fresnel_normal_strength = 1.0
+shader_parameter/normal_strength = 1.0
+shader_parameter/roughness = 0.1
+shader_parameter/metallic = 0.0
+shader_parameter/use_environment_map = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6gsge"]
+material = SubResource("ShaderMaterial_nwon6")
+size = Vector2(20, 20)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_h5dly"]
+panorama = ExtResource("9_5fme1")
+energy_multiplier = 1.2
+
+[sub_resource type="Sky" id="Sky_nwon6"]
+sky_material = SubResource("PanoramaSkyMaterial_h5dly")
+
+[sub_resource type="Environment" id="Environment_6gsge"]
+background_mode = 2
+sky = SubResource("Sky_nwon6")
+ambient_light_source = 3
+reflected_light_source = 2
+fog_enabled = true
+fog_light_color = Color(0.40608117, 0.5569411, 0.7710899, 1)
+fog_aerial_perspective = 1.0
+
+[node name="Node3D" type="Node3D" unique_id=1688219171]
+
+[node name="SineMeshRaw" type="MeshInstance3D" parent="." unique_id=982537899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4160213, 0, 0)
+visible = false
+mesh = SubResource("PlaneMesh_s3vvr")
+
+[node name="SineMesh" type="MeshInstance3D" parent="." unique_id=228559555]
+mesh = SubResource("PlaneMesh_b0nem")
+
+[node name="SumSineMesh" type="MeshInstance3D" parent="." unique_id=1446305970]
+visible = false
+mesh = SubResource("PlaneMesh_5fme1")
+
+[node name="GerstnerMesh" type="MeshInstance3D" parent="." unique_id=712874051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+visible = false
+mesh = SubResource("PlaneMesh_7qr1p")
+skeleton = NodePath("")
+
+[node name="SumGerstnerMesh" type="MeshInstance3D" parent="." unique_id=1322648123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+visible = false
+mesh = SubResource("PlaneMesh_nwon6")
+
+[node name="DirectionalMesh" type="MeshInstance3D" parent="." unique_id=1903921232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+visible = false
+mesh = SubResource("PlaneMesh_e66cg")
+
+[node name="RadialMesh" type="MeshInstance3D" parent="." unique_id=1217805033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)
+visible = false
+mesh = SubResource("PlaneMesh_h5dly")
+
+[node name="AcerolaSumSineMesh" type="MeshInstance3D" parent="." unique_id=1842897742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15.659647)
+visible = false
+mesh = SubResource("PlaneMesh_6gsge")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=749665844]
+environment = SubResource("Environment_6gsge")

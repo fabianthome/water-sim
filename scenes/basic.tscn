@@ -1,0 +1,581 @@
+[gd_scene format=3 uid="uid://ca3kidadtbo2n"]
+
+[ext_resource type="Shader" uid="uid://cbe4ek5s5f3k0" path="res://shaders/gerstner-sum.gdshader" id="1_6x5ir"]
+[ext_resource type="Shader" uid="uid://c4rhm25c5s7im" path="res://shaders/sine.gdshader" id="1_ampw4"]
+[ext_resource type="Script" uid="uid://sdlwo25garob" path="res://scripts/camera.gd" id="1_j2j5c"]
+[ext_resource type="Shader" uid="uid://d3gmfbul25eqt" path="res://shaders/gerstner.gdshader" id="2_dfl7p"]
+[ext_resource type="Shader" uid="uid://8apad1wua6v1" path="res://shaders/solid.gdshader" id="2_dq03a"]
+[ext_resource type="Texture2D" uid="uid://bl6mhgltwj4cp" path="res://assets/colormap.png" id="4_w4mkn"]
+[ext_resource type="ArrayMesh" uid="uid://bxfsfg80s3o4n" path="res://assets/barrel.obj" id="5_7mps8"]
+[ext_resource type="Shader" uid="uid://cnpugk41ljf8q" path="res://shaders/fbm.gdshader" id="5_txgak"]
+[ext_resource type="Script" uid="uid://c1kyu1u4mbh40" path="res://scripts/floatable.gd" id="6_7mps8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_urc8o"]
+render_priority = 0
+shader = ExtResource("2_dq03a")
+shader_parameter/water_color = Color(0.32941177, 0.56078434, 0.8117647, 1)
+shader_parameter/shininess = 130.37200614517
+shader_parameter/specular_color = Color(0.7647059, 0.3019608, 0.34901962, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e5uum"]
+material = SubResource("ShaderMaterial_urc8o")
+size = Vector2(15, 15)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w4mkn"]
+render_priority = 0
+shader = ExtResource("1_ampw4")
+shader_parameter/water_color = Color(0.32941177, 0.56078434, 0.8117647, 1)
+shader_parameter/shininess = 130.37200614517
+shader_parameter/specular_color = Color(0.7647059, 0.3019608, 0.34901962, 1)
+shader_parameter/direction = Vector2(1, 0)
+shader_parameter/amplitude = 0.5
+shader_parameter/wavelength = 4.0
+shader_parameter/speed = 0.7
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7mps8"]
+material = SubResource("ShaderMaterial_w4mkn")
+size = Vector2(15, 15)
+subdivide_width = 200
+subdivide_depth = 200
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2j5c"]
+render_priority = 0
+shader = ExtResource("2_dfl7p")
+shader_parameter/water_color = Color(0.32941177, 0.56078434, 0.8117647, 1)
+shader_parameter/shininess = 130.37200614517
+shader_parameter/specular_color = Color(0.7647059, 0.3019608, 0.34901962, 1)
+shader_parameter/direction = Vector2(1, 0)
+shader_parameter/amplitude = 0.5
+shader_parameter/wavelength = 4.0
+shader_parameter/steepness = 0.5
+shader_parameter/speed = 0.7
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_txgak"]
+material = SubResource("ShaderMaterial_j2j5c")
+size = Vector2(15, 15)
+subdivide_width = 200
+subdivide_depth = 200
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6gsge"]
+render_priority = 0
+shader = ExtResource("1_6x5ir")
+shader_parameter/water_color = Color(0.3301814, 0.5590182, 0.8102496, 1)
+shader_parameter/shininess = 130.37200614517
+shader_parameter/specular_color = Color(0.7647059, 0.3019608, 0.34901962, 1)
+shader_parameter/wave_count = 3
+shader_parameter/wave_1 = Vector4(1, 0, 0.5, 0.2)
+shader_parameter/wave_2 = Vector4(0.7, 0.7, 0.3, 0.1)
+shader_parameter/wave_3 = Vector4(-0.2, 0.8, 0.2, 0.05)
+shader_parameter/params_1 = Vector2(4, 0.5)
+shader_parameter/params_2 = Vector2(2.5, 1)
+shader_parameter/params_3 = Vector2(1.2, 0.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xgo4x"]
+material = SubResource("ShaderMaterial_6gsge")
+size = Vector2(15, 15)
+subdivide_width = 200
+subdivide_depth = 200
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dq03a"]
+render_priority = 0
+shader = ExtResource("5_txgak")
+shader_parameter/water_color = Color(0.32941177, 0.56078434, 0.8117647, 1)
+shader_parameter/shininess = 130.37200614517
+shader_parameter/specular_color = Color(0.7647059, 0.3019608, 0.34901962, 1)
+shader_parameter/octaves = 8
+shader_parameter/lacunarity = 2.0
+shader_parameter/gain = 0.5
+shader_parameter/hurst = 0.1
+shader_parameter/initial_frequency = 0.2
+shader_parameter/initial_amplitude = 0.5
+shader_parameter/speed = 1.0
+shader_parameter/warp_strength = 1.0
+shader_parameter/warp_frequency = 0.3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_urc8o"]
+material = SubResource("ShaderMaterial_dq03a")
+size = Vector2(15, 15)
+subdivide_width = 200
+subdivide_depth = 200
+
+[sub_resource type="Environment" id="Environment_6x5ir"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7mps8"]
+radius = 0.31689453
+height = 0.72553444
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j2j5c"]
+albedo_texture = ExtResource("4_w4mkn")
+
+[node name="Node3D" type="Node3D" unique_id=484688181]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2104643265]
+transform = Transform3D(0.56030655, 0, -0.8282854, 0, 1, 0, 0.8282854, 0, 0.56030655, -12.412038, 3.1507025, 9.277875)
+current = true
+script = ExtResource("1_j2j5c")
+acceleration = 10.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=198059456]
+transform = Transform3D(0.81699085, 0.02407273, 0.57614803, -0.576451, 0.06038494, 0.81489754, -0.015173851, -0.99788487, 0.063210696, 10, 6, 0)
+light_color = Color(1, 0.95686275, 0.8392157, 1)
+light_energy = 5.0
+shadow_enabled = true
+
+[node name="SolidMesh" type="MeshInstance3D" parent="." unique_id=460925714]
+visible = false
+mesh = SubResource("PlaneMesh_e5uum")
+
+[node name="SineMesh" type="MeshInstance3D" parent="." unique_id=449314837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0022962093, 0.0031905174, -0.0017154217)
+visible = false
+mesh = SubResource("PlaneMesh_7mps8")
+
+[node name="GerstnerMesh" type="MeshInstance3D" parent="." unique_id=1501670727]
+visible = false
+mesh = SubResource("PlaneMesh_txgak")
+
+[node name="GerstnerSumMesh" type="MeshInstance3D" parent="." unique_id=866835686]
+visible = false
+mesh = SubResource("PlaneMesh_xgo4x")
+
+[node name="FBMMesh" type="MeshInstance3D" parent="." unique_id=44296304]
+visible = false
+mesh = SubResource("PlaneMesh_urc8o")
+
+[node name="FBM27x27" type="Node3D" parent="." unique_id=779059221]
+visible = false
+
+[node name="FMB9x9-1" type="Node3D" parent="FBM27x27" unique_id=2064927314]
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=1971331452]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=2131520230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=1759720288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=467553690]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=627808339]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=1985457322]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=1986191971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-1" unique_id=721956823]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-2" type="Node3D" parent="FBM27x27" unique_id=2145121063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=1021287125]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=871219000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=1620418392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=1172287931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=757035662]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=36170989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=156963924]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=881261630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-2" unique_id=1153503139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-3" type="Node3D" parent="FBM27x27" unique_id=448274003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -45)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=364374507]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=1255312270]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=1669015469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=347355123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=1578359114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=1555106228]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=1931296291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=1135151317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-3" unique_id=1735670729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-4" type="Node3D" parent="FBM27x27" unique_id=326332410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 0)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=1515788829]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=727391371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=1891221025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=422510527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=957774455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=698836437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=1284677376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=1982694809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-4" unique_id=211753117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-5" type="Node3D" parent="FBM27x27" unique_id=840555193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 45)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=1101174790]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=689315098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=1222952488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=1614661946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=815530868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=1715210155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=1378776822]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=820299836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-5" unique_id=187249890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-6" type="Node3D" parent="FBM27x27" unique_id=1053884981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 45)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=1893882075]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=537640450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=1473873793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=1959159914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=1954279972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=1629461400]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=321422351]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=1836940767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-6" unique_id=955580716]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-7" type="Node3D" parent="FBM27x27" unique_id=262941819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 0, 45)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=328343516]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=1593768211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=555366782]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=317152133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=1421165186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=1305108040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=1645808709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=1673101901]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-7" unique_id=967925953]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-8" type="Node3D" parent="FBM27x27" unique_id=1505830661]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 0, 0)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=1900190355]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=2033079115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=1150156216]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=1749580338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=1088766225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=2109944939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=140879884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=209424090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-8" unique_id=71927003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FMB9x9-9" type="Node3D" parent="FBM27x27" unique_id=1029857993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 0, -45)
+
+[node name="FBMMesh" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=1879671629]
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh2" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=1132914328]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh3" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=827287252]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh4" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=1409849854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh5" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=1855892469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh6" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=1493573072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh7" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=814400871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh8" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=84106266]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="FBMMesh9" type="MeshInstance3D" parent="FBM27x27/FMB9x9-9" unique_id=1100301329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 15)
+mesh = SubResource("PlaneMesh_urc8o")
+skeleton = NodePath("../../..")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=795515706]
+environment = SubResource("Environment_6x5ir")
+
+[node name="Barrel" type="RigidBody3D" parent="." unique_id=1187186948]
+visible = false
+script = ExtResource("6_7mps8")
+
+[node name="BarrelCollisionShape" type="CollisionShape3D" parent="Barrel" unique_id=66689656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004565239, 0.28749263, 0.010308504)
+shape = SubResource("CapsuleShape3D_7mps8")
+
+[node name="BarrelMesh" type="MeshInstance3D" parent="Barrel" unique_id=1621271183]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_j2j5c")
+mesh = ExtResource("5_7mps8")
+skeleton = NodePath("../..")
